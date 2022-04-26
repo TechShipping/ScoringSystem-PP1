@@ -4,8 +4,6 @@ package net.mconcoba.views;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.mconcoba.contollers.StudentController;
-import net.mconcoba.models.StudentModel;
 
 /**
  *
@@ -13,214 +11,10 @@ import net.mconcoba.models.StudentModel;
  */
 public class ScorginsView extends javax.swing.JFrame {
     
-    private enum operaciones{NUEVO, GUARDAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NINGUNO};
-    private operaciones tipoDeOperacion = operaciones.NINGUNO;
-    String columnas[] = {"Clave","Nombres","Apellidos","Bimestre 1","Bimestre 2","Bimestre 3","Bimestre 4","Promedio"};
-    DefaultTableModel modelo = new DefaultTableModel(columnas, 0){
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-        
-    };
-    StudentController studetC = new StudentController();
-    ArrayList<Object[]> data = new ArrayList<>();
-
-    
     public ScorginsView() {
         initComponents();
-        cargarDatos();
-        desactivarControles();
     }
 
-    private void cargarDatos(){
-        btn_editar.setEnabled(false);
-        btn_eliminar.setEnabled(false);
-        this.data = studetC.consultar();
-        modelo.getColumnName(0);
-        modelo.setNumRows(0);
-        for(Object [] dato: this.data){
-            this.modelo.addRow(dato);
-        }
-        tbl_notas.setModel(modelo);
-    }
-    
-    
-    public void nuevo(){
-        switch (tipoDeOperacion){
-            case NINGUNO:
-                limpiarControles();
-                tbl_notas.getSelectionModel().clearSelection();
-                activarControles();
-                txt_nombre.requestFocus();
-                btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/save.png")));
-                btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/close.png")));
-                btn_nuevo.setText("Guardar");
-                btn_eliminar.setText("Cancelar");
-                btn_eliminar.setEnabled(true);
-                btn_editar.setEnabled(false);
-                tipoDeOperacion = operaciones.GUARDAR;
-                break;
-            case GUARDAR:
-                
-                if(txt_nombre.getText().isEmpty() || txt_apellido.getText().isEmpty() || txt_nota1.getText().isEmpty() || 
-                        txt_nota2.getText().isEmpty() || txt_nota3.getText().isEmpty() || txt_nota4.getText().isEmpty() ){
-                    JOptionPane.showMessageDialog(null, "Datos Incompletos", "Error", 0);
-                }else{
-                    StudentModel std = new StudentModel(0, txt_nombre.getText(),
-                                    txt_apellido.getText(),
-                                    Float.parseFloat(txt_nota1.getText()),
-                                    Float.parseFloat(txt_nota2.getText()),
-                                    Float.parseFloat(txt_nota3.getText()),
-                                    Float.parseFloat(txt_nota4.getText()),
-                                    Float.parseFloat("0"), null,null);
-                    studetC.guardar(std);
-                    desactivarControles();
-                    limpiarControles();
-                    tbl_notas.getSelectionModel().clearSelection();
-                    btn_nuevo.setText("Nuevo");
-                    btn_eliminar.setText("Eliminar");
-                    cargarDatos();
-                    tipoDeOperacion = operaciones.NINGUNO;
-                }
-            break;
-        }
-    }
-    
-    public void eliminar(){
-        int selectedRowIndex = tbl_notas.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)tbl_notas.getModel();
-        switch (tipoDeOperacion) {
-            case GUARDAR:
-                desactivarControles();
-                limpiarControles();
-                tbl_notas.getSelectionModel().clearSelection();
-                btn_nuevo.setText("Nuevo");
-                btn_eliminar.setText("Eliminar");
-                // btn_editar.setEnabled(true);
-                tipoDeOperacion = operaciones.NINGUNO;
-            break;
-            case ACTUALIZAR:
-                desactivarControles();
-                limpiarControles();
-                tbl_notas.getSelectionModel().clearSelection();
-                btn_editar.setText("Editar");
-                btn_eliminar.setText("Eliminar");
-                btn_nuevo.setEnabled(true);
-                tipoDeOperacion = operaciones.NINGUNO;
-            break;
-            default:
-                if (selectedRowIndex >= 0) {
-                    int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el registro?", "Eliminar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(respuesta == JOptionPane.YES_OPTION) {
-                        StudentModel std = new StudentModel(Integer.parseInt(model.getValueAt(selectedRowIndex, 0).toString()), 
-                                                    txt_nombre.getText(),
-                                                    txt_apellido.getText(),
-                                                    Float.parseFloat(txt_nota1.getText()),
-                                                    Float.parseFloat(txt_nota2.getText()),
-                                                    Float.parseFloat(txt_nota3.getText()),
-                                                    Float.parseFloat(txt_nota4.getText()),
-                                                    Float.parseFloat("0"),
-                                                    null,
-                                                    null);
-                        studetC.eliminar(std);
-                        desactivarControles();
-                        limpiarControles();
-                        tbl_notas.getSelectionModel().clearSelection();
-                        cargarDatos();
-                        tipoDeOperacion = operaciones.NINGUNO;
-                    }else{
-                        limpiarControles();
-                        tbl_notas.getSelectionModel().clearSelection();   
-                    }
-                        
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento");
-                }
-                
-        
-        }
-    } 
-    
-    public void editar(){
-        int selectedRowIndex = tbl_notas.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)tbl_notas.getModel();
-        switch (tipoDeOperacion) {
-            case NINGUNO:
-                if (selectedRowIndex >= 0) {
-                    btn_editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/save.png")));
-                    btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/close.png")));
-                    btn_editar.setText("Actualizar");
-                    btn_eliminar.setText("Cancelar");
-                    btn_eliminar.setEnabled(true);
-                    btn_nuevo.setEnabled(false);
-                    activarControles();
-                    tipoDeOperacion = operaciones.ACTUALIZAR;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento");
-                }
-            break;
-            case ACTUALIZAR:
-                if(txt_nombre.getText().isEmpty() || txt_apellido.getText().isEmpty() || txt_nota1.getText().isEmpty() || 
-                        txt_nota2.getText().isEmpty() || txt_nota3.getText().isEmpty() || txt_nota4.getText().isEmpty() ){
-                    JOptionPane.showMessageDialog(null, "Datos Incompletos", "Error", 0);
-                } else {
-                    
-                     StudentModel std = new StudentModel(Integer.parseInt(model.getValueAt(selectedRowIndex, 0).toString()),
-                                    txt_nombre.getText(),
-                                    txt_apellido.getText(),
-                                    Float.parseFloat(txt_nota1.getText()),
-                                    Float.parseFloat(txt_nota2.getText()),
-                                    Float.parseFloat(txt_nota3.getText()),
-                                    Float.parseFloat(txt_nota4.getText()),
-                                    Float.parseFloat("0"), null,null);
-                    studetC.editar(std);
-                    desactivarControles();
-                    limpiarControles();
-                    tbl_notas.getSelectionModel().clearSelection();
-                    btn_editar.setText("Editar");
-                    btn_eliminar.setText("Eliminar");
-                    btn_nuevo.setEnabled(true);
-                    cargarDatos();
-                    tipoDeOperacion = operaciones.NINGUNO;
-                }
-            break;
-        }
-    }
-    
-     public void desactivarControles(){
-        txt_nombre.setEnabled(false);
-        txt_apellido.setEnabled(false);
-        txt_nota1.setEnabled(false);
-        txt_nota2.setEnabled(false);
-        txt_nota3.setEnabled(false);
-        txt_nota4.setEnabled(false);
-        btn_editar.setEnabled(false);
-        btn_eliminar.setEnabled(false);
-        
-        btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/add.png")));
-        btn_editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/update.png")));
-        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/delete.png")));
-    }
-    
-    public void activarControles(){
-        txt_nombre.setEnabled(true);
-        txt_apellido.setEnabled(true);
-        txt_nota1.setEnabled(true);
-        txt_nota2.setEnabled(true);
-        txt_nota3.setEnabled(true);
-        txt_nota4.setEnabled(true);
-    }
-    
-    public void limpiarControles(){
-        txt_nombre.setText("");
-        txt_apellido.setText("");
-        txt_nota1.setText("");
-        txt_nota2.setText("");
-        txt_nota3.setText("");
-        txt_nota4.setText("");
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -518,7 +312,7 @@ public class ScorginsView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
-        eliminar();
+     
     }//GEN-LAST:event_btn_eliminarMouseClicked
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
@@ -526,7 +320,7 @@ public class ScorginsView extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editarMouseClicked
-        editar();
+    
     }//GEN-LAST:event_btn_editarMouseClicked
 
     private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
@@ -552,7 +346,7 @@ public class ScorginsView extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_notasComponentResized
 
     private void btn_nuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nuevoMouseClicked
-        nuevo();
+        
     }//GEN-LAST:event_btn_nuevoMouseClicked
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
