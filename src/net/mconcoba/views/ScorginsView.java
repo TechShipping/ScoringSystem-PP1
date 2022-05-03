@@ -1,6 +1,7 @@
 
 package net.mconcoba.views;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -64,8 +65,11 @@ public class ScorginsView extends javax.swing.JFrame {
             case GUARDAR:
                 
                 if(txt_nombre.getText().isEmpty() || txt_apellido.getText().isEmpty() || txt_nota1.getText().isEmpty() || 
-                        txt_nota2.getText().isEmpty() || txt_nota3.getText().isEmpty() || txt_nota4.getText().isEmpty() ){
+                        txt_nota2.getText().isEmpty() || txt_nota3.getText().isEmpty() || txt_nota4.getText().isEmpty() ) {
                     JOptionPane.showMessageDialog(null, "Datos Incompletos", "Error", 0);
+                } else if(Float.parseFloat(txt_nota1.getText()) > 100 || Float.parseFloat(txt_nota2.getText()) > 100 ||
+                          Float.parseFloat(txt_nota3.getText()) > 100 || Float.parseFloat(txt_nota4.getText()) > 100) {
+                    JOptionPane.showMessageDialog(null, "Favor de verificar las notas no deben de ser mayor a 100", "Error", 0);
                 }else{
                     StudentModel std = new StudentModel(0, txt_nombre.getText(),
                                     txt_apellido.getText(),
@@ -221,11 +225,18 @@ public class ScorginsView extends javax.swing.JFrame {
         txt_nota4.setText("");
     }
     
+    public void keyPressed(KeyEvent ke, javax.swing.JTextField input) {
+        if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyCode() == 8 ) {
+           input.setEditable(true);
+        }  else {
+           input.setEditable(false);
+        }
+     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txt_nombre = new javax.swing.JTextField();
         txt_apellido = new javax.swing.JTextField();
@@ -246,22 +257,13 @@ public class ScorginsView extends javax.swing.JFrame {
         btn_editar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         btn_nuevo = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel7.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Calificaciones");
-        jLabel7.setToolTipText("");
-
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
-
-        txt_apellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_apellidoActionPerformed(evt);
-            }
-        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Nombres:");
@@ -281,6 +283,30 @@ public class ScorginsView extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Nota 3");
 
+        txt_nota1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_nota1KeyPressed(evt);
+            }
+        });
+
+        txt_nota2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_nota2KeyPressed(evt);
+            }
+        });
+
+        txt_nota3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_nota3KeyPressed(evt);
+            }
+        });
+
+        txt_nota4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_nota4KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -294,24 +320,24 @@ public class ScorginsView extends javax.swing.JFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(txt_nota1)))
+                                .addComponent(txt_nota1, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)))
                         .addGap(65, 65, 65)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(txt_nota2)))
+                                .addComponent(txt_nota2, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)))
                         .addGap(65, 65, 65)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(txt_nota3)))
+                                .addComponent(txt_nota3, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)))
                         .addGap(65, 65, 65)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(txt_nota4))
+                                .addComponent(txt_nota4, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,10 +404,8 @@ public class ScorginsView extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_notasMouseClicked(evt);
             }
-        });
-        tbl_notas.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                tbl_notasComponentResized(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tbl_notasMouseExited(evt);
             }
         });
         jScrollPane1.setViewportView(tbl_notas);
@@ -407,7 +431,7 @@ public class ScorginsView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -420,22 +444,12 @@ public class ScorginsView extends javax.swing.JFrame {
                 btn_editarMouseClicked(evt);
             }
         });
-        btn_editar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editarActionPerformed(evt);
-            }
-        });
 
         btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/delete.png"))); // NOI18N
         btn_eliminar.setText("Eliminar");
         btn_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_eliminarMouseClicked(evt);
-            }
-        });
-        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_eliminarActionPerformed(evt);
             }
         });
 
@@ -446,11 +460,6 @@ public class ScorginsView extends javax.swing.JFrame {
                 btn_nuevoMouseClicked(evt);
             }
         });
-        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_nuevoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -458,11 +467,11 @@ public class ScorginsView extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(80, 80, 80)
-                .addComponent(btn_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(btn_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(88, 88, 88)
-                .addComponent(btn_editar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(btn_editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(88, 88, 88)
-                .addComponent(btn_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(btn_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(80, 80, 80))
         );
         jPanel4Layout.setVerticalGroup(
@@ -475,41 +484,59 @@ public class ScorginsView extends javax.swing.JFrame {
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
+        jLabel7.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Calificaciones");
+        jLabel7.setToolTipText("");
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/net/mconcoba/resource/list.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(168, 168, 168)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(122, 122, 122)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -521,17 +548,9 @@ public class ScorginsView extends javax.swing.JFrame {
         eliminar();
     }//GEN-LAST:event_btn_eliminarMouseClicked
 
-    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_eliminarActionPerformed
-
     private void btn_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editarMouseClicked
         editar();
     }//GEN-LAST:event_btn_editarMouseClicked
-
-    private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_editarActionPerformed
 
     private void tbl_notasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_notasMouseClicked
         DefaultTableModel model = (DefaultTableModel)tbl_notas.getModel();
@@ -547,22 +566,29 @@ public class ScorginsView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tbl_notasMouseClicked
 
-    private void tbl_notasComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tbl_notasComponentResized
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbl_notasComponentResized
-
     private void btn_nuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nuevoMouseClicked
         nuevo();
     }//GEN-LAST:event_btn_nuevoMouseClicked
 
-    private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
+    private void tbl_notasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_notasMouseExited
+       //desactivarControles();
+    }//GEN-LAST:event_tbl_notasMouseExited
 
-    }//GEN-LAST:event_btn_nuevoActionPerformed
+    private void txt_nota1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nota1KeyPressed
+       keyPressed(evt, txt_nota1);
+    }//GEN-LAST:event_txt_nota1KeyPressed
 
-    private void txt_apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_apellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_apellidoActionPerformed
+    private void txt_nota2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nota2KeyPressed
+        keyPressed(evt, txt_nota2);
+    }//GEN-LAST:event_txt_nota2KeyPressed
 
+    private void txt_nota3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nota3KeyPressed
+        keyPressed(evt, txt_nota3);
+    }//GEN-LAST:event_txt_nota3KeyPressed
+
+    private void txt_nota4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nota4KeyPressed
+        keyPressed(evt, txt_nota4);
+    }//GEN-LAST:event_txt_nota4KeyPressed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_editar;
@@ -576,6 +602,7 @@ public class ScorginsView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
