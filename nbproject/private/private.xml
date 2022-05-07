@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/mconcoba/NetBeansProjects/ScoringSystem/src/net/mconcoba/views/LoginView.java</file>
+            <file>file:/home/mconcoba/NetBeansProjects/ScoringSystem/src/net/mconcoba/system/Main.java</file>
             <file>file:/home/mconcoba/NetBeansProjects/ScoringSystem/src/net/mconcoba/views/ScorginsView.java</file>
-            <file>file:/home/mconcoba/NetBeansProjects/ScoringSystem/src/net/mconcoba/models/StudentModel.java</file>
-            <file>file:/home/mconcoba/NetBeansProjects/ScoringSystem/src/net/mconcoba/contollers/StudentController.java</file>
-            <file>file:/home/mconcoba/NetBeansProjects/ScoringSystem/src/net/mconcoba/system/main.java</file>
         </group>
     </open-files>
 </project-private>
