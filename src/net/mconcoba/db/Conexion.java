@@ -19,7 +19,7 @@ public class Conexion {
     public Conexion(){
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost/SysNotas", "root", "");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost/ProyectoPrograI", "root", "");
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }catch (InstantiationException e){
